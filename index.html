@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tiny One</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: transparent;
+    color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+
+  .display-card {
+    background: #fff;
+    border: 0.5px solid rgba(0,0,0,0.12);
+    border-radius: 12px;
+    padding: 2rem 1.5rem 1.5rem;
+    max-width: 320px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .event-label {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .week-big {
+    font-size: 80px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -2px;
+    color: #1a1a1a;
+  }
+
+  .week-ordinal {
+    font-size: 36px;
+    font-weight: 400;
+    vertical-align: super;
+    letter-spacing: 0;
+  }
+
+  .week-unit {
+    font-size: 18px;
+    color: #888;
+    margin-top: 6px;
+    margin-bottom: 1rem;
+  }
+
+  .detail {
+    font-size: 13px;
+    color: #666;
+    padding-top: 1rem;
+    border-top: 0.5px solid rgba(0,0,0,0.1);
+    line-height: 1.7;
+    white-space: pre-line;
+  }
+
+  .tick {
+    font-size: 11px;
+    color: #bbb;
+    margin-top: 0.75rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body { color: #e8e8e8; }
+    .display-card { background: #1e1e1e; border-color: rgba(255,255,255,0.1); }
+    .week-big { color: #e8e8e8; }
+    .detail { border-top-color: rgba(255,255,255,0.1); color: #aaa; }
+  }
+</style>
+</head>
+<body>
+<div class="display-card">
+  <p class="event-label">Tiny One</p>
+  <p class="week-big" id="week-num">–<span class="week-ordinal" id="ordinal"></span></p>
+  <p class="week-unit">week</p>
+  <div class="detail" id="detail-out"></div>
+  <p class="tick" id="tick-out"></p>
+</div>
+
+<script>
+const START = new Date('2026-02-27T00:00:00');
+
+function ordinalSuffix(n) {
+  const s = ['th','st','nd','rd'];
+  const v = n % 100;
+  return s[(v - 20) % 10] || s[v] || s[0];
+}
+
+function tick() {
+  const now = new Date();
+  const ms = now - START;
+  if (ms < 0) {
+    document.getElementById('week-num').textContent = '?';
+    document.getElementById('detail-out').textContent = 'Not yet started.';
+    return;
+  }
+  const totalDays = Math.floor(ms / 86400000);
+  const weeks = Math.floor(totalDays / 7) + 1; // nth week = completed weeks + 1
+  const remDays = totalDays % 7;
+
+  const numEl = document.getElementById('week-num');
+  const ordEl = document.getElementById('ordinal');
+  numEl.childNodes[0].textContent = weeks;
+  ordEl.textContent = ordinalSuffix(weeks);
+
+  const sinceStr = START.toLocaleDateString(undefined, {day:'numeric', month:'long', year:'numeric'});
+  document.getElementById('detail-out').textContent =
+    `Since ${sinceStr}.\n${totalDays} days total (${weeks - 1}w ${remDays}d complete).`;
+  document.getElementById('tick-out').textContent = 'Updated ' + now.toLocaleTimeString();
+}
+
+tick();
+setInterval(tick, 60000);
+</script>
+</body>
+</html>
