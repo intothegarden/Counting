@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Countdown</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: transparent;
+    color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+
+  .display-card {
+    background: #fff;
+    border: 0.5px solid rgba(0,0,0,0.12);
+    border-radius: 12px;
+    padding: 2rem 1.5rem 1.5rem;
+    max-width: 320px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .event-label {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .num-big {
+    font-size: 80px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -2px;
+    color: #1a1a1a;
+  }
+
+  .num-unit {
+    font-size: 18px;
+    color: #888;
+    margin-top: 6px;
+    margin-bottom: 1.25rem;
+  }
+
+  .secondary {
+    padding-top: 1rem;
+    border-top: 0.5px solid rgba(0,0,0,0.1);
+  }
+
+  .secondary-num {
+    font-size: 36px;
+    font-weight: 500;
+    color: #1a1a1a;
+    line-height: 1;
+  }
+
+  .secondary-unit {
+    font-size: 14px;
+    color: #888;
+    margin-top: 4px;
+  }
+
+  .detail {
+    font-size: 13px;
+    color: #666;
+    padding-top: 1rem;
+    margin-top: 1rem;
+    border-top: 0.5px solid rgba(0,0,0,0.1);
+    line-height: 1.7;
+    white-space: pre-line;
+  }
+
+  .tick {
+    font-size: 11px;
+    color: #bbb;
+    margin-top: 0.75rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body { color: #e8e8e8; }
+    .display-card { background: #1e1e1e; border-color: rgba(255,255,255,0.1); }
+    .num-big, .secondary-num { color: #e8e8e8; }
+    .secondary, .detail { border-top-color: rgba(255,255,255,0.1); }
+    .detail { color: #aaa; }
+  }
+</style>
+</head>
+<body>
+<div class="display-card">
+  <p class="event-label">Until 24 May 2026</p>
+  <p class="num-big" id="days-num">–</p>
+  <p class="num-unit">days</p>
+  <div class="secondary">
+    <p class="secondary-num" id="shabbat-num">–</p>
+    <p class="secondary-unit">Shabbats</p>
+  </div>
+  <div class="detail" id="detail-out"></div>
+  <p class="tick" id="tick-out"></p>
+</div>
+
+<script>
+// Target: 24 May 2026, start of day in local time
+const TARGET = new Date(2026, 4, 24, 0, 0, 0); // month is 0-indexed: 4 = May
+
+function tick() {
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const ms = TARGET - today;
+
+  if (ms < 0) {
+    document.getElementById('days-num').textContent = '0';
+    document.getElementById('shabbat-num').textContent = '0';
+    document.getElementById('detail-out').textContent = '24 May 2026 has passed.';
+    document.getElementById('tick-out').textContent = 'Updated ' + now.toLocaleTimeString();
+    return;
+  }
+
+  const daysRemaining = Math.ceil(ms / 86400000);
+
+  // Count Shabbats (Saturdays) strictly between today and the target.
+  // Shabbat begins Friday sundown, but we'll count Saturdays as the canonical day.
+  // Includes any Saturday from tomorrow through the day before the target.
+  let shabbats = 0;
+  for (let i = 1; i < daysRemaining; i++) {
+    const d = new Date(today);
+    d.setDate(d.getDate() + i);
+    if (d.getDay() === 6) shabbats++; // 6 = Saturday
+  }
+
+  document.getElementById('days-num').textContent = daysRemaining;
+  document.getElementById('shabbat-num').textContent = shabbats;
+
+  const targetStr = TARGET.toLocaleDateString(undefined, {weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'});
+  document.getElementById('detail-out').textContent = `Target: ${targetStr}.`;
+  document.getElementById('tick-out').textContent = 'Updated ' + now.toLocaleTimeString();
+}
+
+tick();
+// Update every minute (counter only changes at midnight, but cheap to refresh)
+setInterval(tick, 60000);
+</script>
+</body>
+</html>
