@@ -61,6 +61,23 @@
             margin-top: 0.75rem;
         }
 
+        .fruit-card {
+            text-align: center;
+        }
+
+        .fruit-img {
+            margin-top: 40px;
+        }
+
+        .fruit-img {
+            width: 120px;
+            margin-top: 40px;
+        }
+
+        .fruit-card {
+            padding-top: 40px;
+        }
+
         @media (prefers-color-scheme: dark) {
             body {
                 color: #e8e8e8;
@@ -90,10 +107,12 @@
     <p class="updated-p" id="updated-date"></p>
 </div>
 
-<div class="fruit-image-container">
-    <div class="fruit-div">
-        <img class="fruit-img" id="fruit-image" src="./assets/04_weeks_poppy_seed.png" alt="fruit-img">
-    </div>
+<div class="fruit-card">
+    <img class="fruit-img" id="fruit-image" src="./assets/04_weeks_poppy_seed.png" alt="fruit-img">
+</div>
+
+<div class="fact-card">
+    <p class="fact-label" id="fact=text">Tiny One</p>
 </div>
 <script>
     const START = new Date('2026-02-27T00:00:00');
