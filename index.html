@@ -1,95 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tiny One</title>
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiny One</title>
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: transparent;
-    color: #1a1a1a;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1.5rem;
-  }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: transparent;
+            color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
 
-  .display-card {
-    background: #fff;
-    border: 0.5px solid rgba(0,0,0,0.12);
-    border-radius: 12px;
-    padding: 2rem 1.5rem 1.5rem;
-    max-width: 700px;
-    width: 100%;
-    text-align: center;
-  }
+        .display-card {
+            background: #fff;
+            border: 0.5px solid rgba(0, 0, 0, 0.12);
+            border-radius: 12px;
+            padding: 2rem 1.5rem 1.5rem;
+            max-width: 700px;
+            width: 100%;
+            text-align: center;
+        }
 
-  .event-label {
-    font-size: 13px;
-    color: #888;
-    margin-bottom: 0.5rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
+        .event-label {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
 
-  .total-p {
-    font-size: 60px;
-    font-weight: 500;
-    line-height: 1;
-    letter-spacing: -2px;
-  }
+        .total-p {
+            font-size: 60px;
+            font-weight: 500;
+            line-height: 1;
+            letter-spacing: -2px;
+        }
 
-  .since-p {
-    font-size: 13px;
-    color: #666;
-    padding-top: 1rem;
-    border-top: 0.5px solid rgba(0,0,0,0.1);
-    line-height: 1.7;
-    white-space: pre-line;
-  }
+        .since-p {
+            font-size: 13px;
+            color: #666;
+            padding-top: 1rem;
+            border-top: 0.5px solid rgba(0, 0, 0, 0.1);
+            line-height: 1.7;
+            white-space: pre-line;
+        }
 
-  .updated-p {
-    font-size: 11px;
-    color: #bbb;
-    margin-top: 0.75rem;
-  }
+        .updated-p {
+            font-size: 11px;
+            color: #bbb;
+            margin-top: 0.75rem;
+        }
 
-  @media (prefers-color-scheme: dark) {
-    body { color: #e8e8e8; }
-    .display-card { background: #1e1e1e; border-color: rgba(255,255,255,0.1); }
-    .week-big { color: #e8e8e8; }
-    .detail { border-top-color: rgba(255,255,255,0.1); color: #aaa; }
-  }
-</style>
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #e8e8e8;
+            }
+
+            .display-card {
+                background: #1e1e1e;
+                border-color: rgba(255, 255, 255, 0.1);
+            }
+
+            .week-big {
+                color: #e8e8e8;
+            }
+
+            .detail {
+                border-top-color: rgba(255, 255, 255, 0.1);
+                color: #aaa;
+            }
+        }
+    </style>
 </head>
 <body>
 <div class="display-card">
-  <p class="event-label">Tiny One</p>
-  <p class="total-p" id="total-time"></p>
-  <div class="since-p" id="since-date"></div>
-  <p class="updated-p" id="updated-date"></p>
+    <p class="event-label">Tiny One</p>
+    <p class="total-p" id="total-time"></p>
+    <div class="since-p" id="since-date"></div>
+    <p class="updated-p" id="updated-date"></p>
 </div>
 
+<div class="fruit-image-container">
+    <div class="fruit-div">
+        <img class="fruit-img" id="fruit-image" src="./assets/04_weeks_poppy_seed.png" alt="fruit-img">
+    </div>
+</div>
 <script>
-const START = new Date('2026-02-27T00:00:00');
+    const START = new Date('2026-02-27T00:00:00');
 
-function tick() {
-  const now = new Date();
-  const ms = now - START;
+    function tick() {
+        const now = new Date();
+        const ms = now - START;
 
-  const totalDays = Math.floor(ms / 86400000);
-  const weeks = Math.floor(totalDays / 7);
-  const remDays = totalDays % 7;
+        const totalDays = Math.floor(ms / 86400000);
+        const weeks = Math.floor(totalDays / 7);
+        const remDays = totalDays % 7;
 
-  document.getElementById('total-time').textContent = weeks + ' Weeks and ' + remDays + ' days';
-  document.getElementById('since-date').textContent = `Since ${START.toLocaleDateString(undefined, {day:'numeric', month:'long', year:'numeric'})}`;
-  document.getElementById('updated-date').textContent = 'Updated ' + now.toLocaleTimeString();
-}
+        document.getElementById('total-time').textContent = weeks + ' Weeks and ' + remDays + ' days';
+        document.getElementById('since-date').textContent = `Since ${START.toLocaleDateString(undefined, {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        })}`;
+        document.getElementById('updated-date').textContent = 'Updated ' + now.toLocaleTimeString();
+        document.getElementById('fruit-image').src = './assets/' + getImageForWeek(weeks);
+    }
 
-tick();
+    function getImageForWeek(weeks) {
+        switch (weeks) {
+            case 4:
+                return '04_weeks_poppy_seed.png';
+            case 5:
+                return '05_weeks_sesame_seed.png';
+            case 8:
+                return '08_weeks_raspberry.png';
+
+        }
+    }
+
+    tick();
 </script>
 </body>
 </html>
