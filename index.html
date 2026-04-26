@@ -16,19 +16,28 @@
             background: transparent;
             color: #1a1a1a;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+            gap: 1.25rem;
+            min-height: 100vh;
             padding: 1.5rem;
         }
 
-        .display-card {
+        .display-card,
+        .fruit-card,
+        .fact-card {
             background: #fff;
             border: 0.5px solid rgba(0, 0, 0, 0.12);
             border-radius: 12px;
-            padding: 2rem 1.5rem 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             max-width: 700px;
             width: 100%;
             text-align: center;
+        }
+
+        .display-card {
+            padding: 2rem 1.5rem 1.5rem;
         }
 
         .event-label {
@@ -62,24 +71,37 @@
         }
 
         .fruit-card {
-            text-align: center;
+            background: transparent;
+            border: 0;
+            box-shadow: none;
+            padding: 0;
         }
 
         .fruit-img {
-            margin-top: 40px;
-        }
-
-        .fruit-img {
-            width: 120px;
-            margin-top: 40px;
-        }
-
-        .fruit-card {
-            padding-top: 40px;
+            display: block;
+            height: auto;
+            margin: 0 auto;
+            width: min(220px, 70vw);
+            border-radius: 12px;
+            box-shadow: 0 12px 34px rgba(0, 0, 0, 0.14);
         }
 
         .fact-heading {
-            font-size: 32px;
+            color: #1a1a1a;
+            font-size: 28px;
+            font-weight: 650;
+            line-height: 1.15;
+            margin-bottom: 0.85rem;
+        }
+
+        .fact-card {
+            padding: 1.5rem;
+        }
+
+        .fact-label {
+            color: #333;
+            font-size: 18px;
+            line-height: 1.5;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -87,9 +109,19 @@
                 color: #e8e8e8;
             }
 
-            .display-card {
+            .display-card,
+            .fact-card {
                 background: #1e1e1e;
                 border-color: rgba(255, 255, 255, 0.1);
+                box-shadow: 0 14px 40px rgba(0, 0, 0, 0.28);
+            }
+
+            .fruit-img {
+                box-shadow: 0 14px 42px rgba(0, 0, 0, 0.45);
+            }
+
+            .fact-heading {
+                color: #f2f2f2;
             }
 
             .week-big {
@@ -99,6 +131,10 @@
             .detail {
                 border-top-color: rgba(255, 255, 255, 0.1);
                 color: #aaa;
+            }
+
+            .fact-label {
+                color: #d8d8d8;
             }
         }
     </style>
