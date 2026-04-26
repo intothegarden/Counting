@@ -78,6 +78,10 @@
             padding-top: 40px;
         }
 
+        .fact-heading {
+            font-size: 32px;
+        }
+
         @media (prefers-color-scheme: dark) {
             body {
                 color: #e8e8e8;
@@ -112,7 +116,8 @@
 </div>
 
 <div class="fact-card">
-    <p class="fact-label" id="fact=text">Tiny One</p>
+    <p class="fact-heading">This week...</p>
+    <p class="fact-label" id="fact-text">Tiny One</p>
 </div>
 
 <script>
@@ -134,6 +139,7 @@
         })}`;
         document.getElementById('updated-date').textContent = 'Updated ' + now.toLocaleTimeString();
         document.getElementById('fruit-image').src = './assets/' + getImageForWeek(weeks);
+        document.getElementById('fact-text').textContent = getFactForWeek(weeks);
     }
 
     function getImageForWeek(weeks) {
@@ -200,6 +206,15 @@
                 return '37_40_weeks_watermelon.png';
             default:
                 return '04_weeks_poppy_seed.png';
+        }
+    }
+
+    function getFactForWeek(weeks) {
+        switch (weeks) {
+            case 6:
+                return 'Heart beating and neural tube is closing';
+            case 8:
+                return 'test';
         }
     }
 
